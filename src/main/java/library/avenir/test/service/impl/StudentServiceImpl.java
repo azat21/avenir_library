@@ -1,6 +1,8 @@
 package library.avenir.test.service.impl;
 
+import library.avenir.test.dto.StudentCreateDto;
 import library.avenir.test.dto.StudentDto;
+import library.avenir.test.entity.Student;
 import library.avenir.test.mapper.StudentMapper;
 import library.avenir.test.repository.StudentRepository;
 import library.avenir.test.service.StudentService;
@@ -26,5 +28,12 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findAll().stream()
                 .map(studentMapper::toStudentDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public StudentDto save(StudentCreateDto studentCreateDto) {
+        Student student = studentMapper.toStudent(studentCreateDto);
+        Student savedStudent = studentRepository.save(student);
+        return studentMapper.toStudentDto(savedStudent);
     }
 }

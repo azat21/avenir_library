@@ -1,10 +1,9 @@
 package library.avenir.test.controller;
 
+import library.avenir.test.dto.StudentCreateDto;
 import library.avenir.test.dto.StudentDto;
 import library.avenir.test.service.StudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +20,10 @@ public class StudentController {
     @GetMapping
     private List<StudentDto> findAll() {
         return studentService.findAll();
+    }
+
+    @PostMapping
+    private StudentDto save(@RequestBody StudentCreateDto studentCreateDto) {
+        return studentService.save(studentCreateDto);
     }
 }
