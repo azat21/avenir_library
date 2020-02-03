@@ -2,6 +2,7 @@ package library.avenir.test.controller;
 
 import library.avenir.test.dto.StudentCreateDto;
 import library.avenir.test.dto.StudentDto;
+import library.avenir.test.dto.StudentUpdateDto;
 import library.avenir.test.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,5 +26,16 @@ public class StudentController {
     @PostMapping
     private StudentDto save(@RequestBody StudentCreateDto studentCreateDto) {
         return studentService.save(studentCreateDto);
+    }
+
+    @GetMapping("/{id}")
+    private StudentDto getById(@PathVariable Long id) {
+        return studentService.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    private StudentDto update(@PathVariable Long id,
+                              @RequestBody StudentUpdateDto studentUpdateDto) {
+        return studentService.update(id, studentUpdateDto);
     }
 }

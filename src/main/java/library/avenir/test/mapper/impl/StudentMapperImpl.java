@@ -2,6 +2,7 @@ package library.avenir.test.mapper.impl;
 
 import library.avenir.test.dto.StudentCreateDto;
 import library.avenir.test.dto.StudentDto;
+import library.avenir.test.dto.StudentUpdateDto;
 import library.avenir.test.entity.Student;
 import library.avenir.test.mapper.StudentMapper;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,13 @@ public class StudentMapperImpl implements StudentMapper {
         student.setUniversityId(studentCreateDto.getUniversityId());
         student.setLastName(studentCreateDto.getLastName());
         return student;
+    }
+
+    @Override
+    public Student toStudent(Student updatingStudent, StudentUpdateDto studentUpdateDto) {
+        updatingStudent.setFirstName(studentUpdateDto.getFirstName());
+        updatingStudent.setUniversityId(studentUpdateDto.getUniversityId());
+        updatingStudent.setLastName(studentUpdateDto.getLastName());
+        return updatingStudent;
     }
 }
