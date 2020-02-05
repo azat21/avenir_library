@@ -2,6 +2,7 @@ package library.avenir.test.controller;
 
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.service.BookService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
@@ -15,7 +16,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}/updateQuantity")
-    private void updateQuantity(@RequestBody UpdateBookQuantityDto dto,
+    private void updateQuantity(@RequestBody @Validated UpdateBookQuantityDto dto,
                                 @PathVariable Long id) {
         bookService.updateQuantity(id, dto);
     }
