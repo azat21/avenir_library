@@ -1,8 +1,8 @@
 package library.avenir.test.mapper.impl;
 
-import library.avenir.test.dto.StudentCreateDto;
-import library.avenir.test.dto.StudentDto;
-import library.avenir.test.dto.StudentUpdateDto;
+import library.avenir.test.dto.student.StudentCreateDto;
+import library.avenir.test.dto.student.StudentDto;
+import library.avenir.test.dto.student.StudentUpdateDto;
 import library.avenir.test.entity.Student;
 import library.avenir.test.mapper.StudentMapper;
 import org.springframework.stereotype.Service;
