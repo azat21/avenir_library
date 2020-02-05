@@ -1,9 +1,12 @@
 package library.avenir.test.controller;
 
+import library.avenir.test.dto.book.BookDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.service.BookService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController()
 @RequestMapping("/api/books")
@@ -13,6 +16,11 @@ public class BookController {
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
+    }
+
+    @GetMapping
+    private List<BookDto> findAll() {
+        return bookService.findAll();
     }
 
     @PutMapping("/{id}/updateQuantity")
