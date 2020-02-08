@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookMapperImpl implements BookMapper {
 
-    private final AuthorMapper authorMapper;
+//    private final AuthorMapper authorMapper;
 
-    public BookMapperImpl(AuthorMapper authorMapper) {
-        this.authorMapper = authorMapper;
-    }
+//    public BookMapperImpl(AuthorMapper authorMapper) {
+//        this.authorMapper = authorMapper;
+//    }
 
     @Override
     public BookDto toDto(Book book) {
         BookDto bookDto = new BookDto();
-        bookDto.setAuthor(authorMapper.toAuthorDto(book.getAuthor()));
+//        bookDto.setAuthor(authorMapper.toAuthorDto(book.getAuthor()));
         bookDto.setCategory(book.getCategory());
         bookDto.setName(book.getName());
         bookDto.setId(book.getId());
