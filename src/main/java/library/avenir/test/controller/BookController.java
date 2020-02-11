@@ -1,6 +1,7 @@
 package library.avenir.test.controller;
 
 import library.avenir.test.dto.book.BookDto;
+import library.avenir.test.dto.book.BookSearchDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.service.BookService;
 import org.springframework.validation.annotation.Validated;
@@ -27,5 +28,10 @@ public class BookController {
     private void updateQuantity(@RequestBody @Validated UpdateBookQuantityDto dto,
                                 @PathVariable Long id) {
         bookService.updateQuantity(id, dto);
+    }
+
+    @PostMapping("/search")
+    private List<BookDto> search(@RequestBody BookSearchDto searchDto) {
+        return bookService.search(searchDto);
     }
 }

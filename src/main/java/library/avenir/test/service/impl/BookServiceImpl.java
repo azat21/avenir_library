@@ -1,6 +1,7 @@
 package library.avenir.test.service.impl;
 
 import library.avenir.test.dto.book.BookDto;
+import library.avenir.test.dto.book.BookSearchDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.entity.Author;
 import library.avenir.test.entity.Book;
@@ -57,5 +58,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getBooksByAuthor(Author author) {
         return bookRepository.findAllByAuthor(author);
+    }
+
+    @Override
+    public List<BookDto> search(BookSearchDto searchDto) {
+        return bookRepository.findAllByNameContainsIgnoreCase(searchDto.getSearchString())
+                .stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

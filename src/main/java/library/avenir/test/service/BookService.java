@@ -1,6 +1,7 @@
 package library.avenir.test.service;
 
 import library.avenir.test.dto.book.BookDto;
+import library.avenir.test.dto.book.BookSearchDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.entity.Author;
 import library.avenir.test.entity.Book;
@@ -13,4 +14,5 @@ public interface BookService {
     List<Book> findAllById(List<Long> ids);
     Book updateAuthor(Book book, Author author);
     List<Book> getBooksByAuthor(Author author);
+    List<BookDto> search(BookSearchDto searchDto);
 }
