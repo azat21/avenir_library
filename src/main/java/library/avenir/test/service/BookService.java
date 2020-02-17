@@ -5,6 +5,8 @@ import library.avenir.test.dto.book.BookSearchDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.entity.Author;
 import library.avenir.test.entity.Book;
+import library.avenir.test.filterrequest.book.BookFilterRequest;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,5 +16,5 @@ public interface BookService {
     List<Book> findAllById(List<Long> ids);
     Book updateAuthor(Book book, Author author);
     List<Book> getBooksByAuthor(Author author);
-    List<BookDto> search(BookSearchDto searchDto);
+    Page<BookDto> search(BookFilterRequest filterRequest);
 }

@@ -1,9 +1,10 @@
 package library.avenir.test.controller;
 
 import library.avenir.test.dto.book.BookDto;
-import library.avenir.test.dto.book.BookSearchDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
+import library.avenir.test.filterrequest.book.BookFilterRequest;
 import library.avenir.test.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class BookController {
     }
 
     @PostMapping("/search")
-    private List<BookDto> search(@RequestBody BookSearchDto searchDto) {
-        return bookService.search(searchDto);
+    private Page<BookDto> search(@RequestBody BookFilterRequest filterRequest) {
+        return bookService.search(filterRequest);
     }
 }

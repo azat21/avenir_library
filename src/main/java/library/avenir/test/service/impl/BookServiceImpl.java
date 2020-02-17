@@ -1,13 +1,14 @@
 package library.avenir.test.service.impl;
 
 import library.avenir.test.dto.book.BookDto;
-import library.avenir.test.dto.book.BookSearchDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.entity.Author;
 import library.avenir.test.entity.Book;
+import library.avenir.test.filterrequest.book.BookFilterRequest;
 import library.avenir.test.mapper.BookMapper;
 import library.avenir.test.repository.BookRepository;
 import library.avenir.test.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,10 +62,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> search(BookSearchDto searchDto) {
-        return bookRepository.findAllByNameContainsIgnoreCase(searchDto.getSearchString())
-                .stream()
-                .map(bookMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<BookDto> search(BookFilterRequest filterRequest) {
+        return bookRepository.findAll(filterRequest.getPageRequest())
+                .map(bookMapper::toDto);
     }
 }
