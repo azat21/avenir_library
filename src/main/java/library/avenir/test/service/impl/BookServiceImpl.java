@@ -9,6 +9,7 @@ import library.avenir.test.mapper.BookMapper;
 import library.avenir.test.repository.BookRepository;
 import library.avenir.test.service.BookService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +64,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Page<BookDto> search(BookFilterRequest filterRequest) {
-        return bookRepository.findAll(filterRequest.getPageRequest())
+        Integer size = filterRequest.getPageRequest().getSize();
+        Integer pageNumber = filterRequest.getPageRequest().getPageNumber();
+        PageRequest page = PageRequest.of(pageNumber, size);
+        return bookRepository.findAll(page)
                 .map(bookMapper::toDto);
     }
 }

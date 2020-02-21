@@ -11,7 +11,7 @@ import javax.validation.constraints.Min;
 public class PageRequest {
     @Max(100)
     @Min(0)
-    private Long limit;
+    private Integer size;
     @Min(0)
-    private Long offset;
+    private Integer pageNumber;
 }
