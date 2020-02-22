@@ -1,9 +1,12 @@
 package library.avenir.test.service.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import library.avenir.test.dto.book.BookDto;
 import library.avenir.test.dto.book.UpdateBookQuantityDto;
 import library.avenir.test.entity.Author;
 import library.avenir.test.entity.Book;
+import library.avenir.test.entity.QBook;
+import library.avenir.test.enums.Category;
 import library.avenir.test.filterrequest.book.BookFilterRequest;
 import library.avenir.test.mapper.BookMapper;
 import library.avenir.test.repository.BookRepository;
@@ -64,10 +67,26 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Page<BookDto> search(BookFilterRequest filterRequest) {
+        BooleanBuilder predicate = new BooleanBuilder();
+
+        if (filterRequest.getSearchRequest().getCategories() != null) {
+            predicate.and(QBook.book.category.in(filterRequest.getSearchRequest().getCategories()));
+        }
+
+        if (filterRequest.getSearchRequest().getAuthorIds() != null) {
+            predicate.and(QBook.book.author.id.in(filterRequest.getSearchRequest().getAuthorIds()));
+        }
+
+        if (filterRequest.getSearchRequest().getSearchString() != null &&
+                !filterRequest.getSearchRequest().getSearchString().isBlank()) {
+            predicate.and(QBook.book.name.containsIgnoreCase(filterRequest.getSearchRequest().getSearchString()));
+        }
+
         Integer size = filterRequest.getPageRequest().getSize();
         Integer pageNumber = filterRequest.getPageRequest().getPageNumber();
         PageRequest page = PageRequest.of(pageNumber, size);
-        return bookRepository.findAll(page)
+
+        return bookRepository.findAll(predicate, page)
                 .map(bookMapper::toDto);
     }
 }
