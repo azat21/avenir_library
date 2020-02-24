@@ -1,10 +1,11 @@
-package library.avenir.test.filterrequest.book;
+package library.avenir.test.filterrequest.common;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Getter
 @Setter

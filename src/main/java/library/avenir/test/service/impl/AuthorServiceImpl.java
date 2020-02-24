@@ -1,13 +1,18 @@
 package library.avenir.test.service.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import library.avenir.test.dto.author.AuthorDto;
 import library.avenir.test.dto.book.BookIdsDto;
 import library.avenir.test.entity.Author;
 import library.avenir.test.entity.Book;
+import library.avenir.test.entity.QAuthor;
+import library.avenir.test.filterrequest.author.AuthorFilterRequest;
 import library.avenir.test.mapper.AuthorMapper;
 import library.avenir.test.repository.AuthorRepository;
 import library.avenir.test.service.AuthorService;
 import library.avenir.test.service.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -49,11 +54,37 @@ public class AuthorServiceImpl implements AuthorService {
             dtos.add(authorDto);
         }
         return dtos;
+    }
 
-//        return authorRepository.findAll().stream()
-//                .map(authorMapper::toAuthorDto)
-//                .ma
-//                .collect(Collectors.toList());
-//    }
+    @Override
+    public Page<AuthorDto> search(AuthorFilterRequest filterRequest) {
+        BooleanBuilder predicate = new BooleanBuilder();
+
+        if (filterRequest.getSearchRequest().getSearchString() != null) {
+            predicate.andAnyOf(QAuthor.author.firstName.containsIgnoreCase(
+                    filterRequest.getSearchRequest().getSearchString()),
+                    QAuthor.author.lastName.containsIgnoreCase(
+                            filterRequest.getSearchRequest().getSearchString())
+            );
+        }
+
+        if (filterRequest.getSearchRequest().getBirthDateMin() != null) {
+            predicate.and(QAuthor.author.birthDate.after(
+                    filterRequest.getSearchRequest().getBirthDateMin()
+            ));
+        }
+
+        if (filterRequest.getSearchRequest().getBirthDateMax() != null) {
+            predicate.and(QAuthor.author.birthDate.before(
+                    filterRequest.getSearchRequest().getBirthDateMax()
+            ));
+        }
+
+        Integer size = filterRequest.getPageRequest().getSize();
+        Integer pageNumber = filterRequest.getPageRequest().getPageNumber();
+        PageRequest page = PageRequest.of(pageNumber, size);
+
+        return authorRepository.findAll(predicate, page)
+                .map(x -> authorMapper.toAuthorDto(x, bookService.getBooksByAuthor(x)));
     }
 }

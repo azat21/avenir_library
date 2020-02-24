@@ -2,7 +2,9 @@ package library.avenir.test.controller;
 
 import library.avenir.test.dto.author.AuthorDto;
 import library.avenir.test.dto.book.BookIdsDto;
+import library.avenir.test.filterrequest.author.AuthorFilterRequest;
 import library.avenir.test.service.AuthorService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +28,10 @@ public class AuthorController {
     private void bindBooksWithAuthor(@PathVariable Long id,
                                      @RequestBody BookIdsDto dto) {
         authorService.bindBooksWithAuthor(id, dto);
+    }
+
+    @PostMapping("/search")
+    private Page<AuthorDto> search(@RequestBody AuthorFilterRequest filterRequest) {
+        return authorService.search(filterRequest);
     }
 }
